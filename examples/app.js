@@ -4,7 +4,7 @@ var rimraf = require('rimraf');
 var replacer = require("apigee-proxy-template-replacer");
 
 var template_dir = "./proxy_templates/oauth2";
-var answers_path = "./files/answerExample.json";
+var answers_path = "./json_configs/answerExample.json";
 var output_dir = "./output";
 
 console.log("Begin proxy generation from template...");
