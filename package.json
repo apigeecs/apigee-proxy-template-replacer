@@ -15,11 +15,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.apigee.com:api-wizard/apiproxy-template-replacer.git"
+    "url": "git@github.com:apigeecs/apiproxy-template-replacer.git"
   },
   "author": "Apigee Corporation",
   "contributors": [
     "Michael Russo <mrusso@apigee.com>"
   ],
-  "license": ""
+  "license": "MIT"
 }
