@@ -9,7 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "apigee-proxy-template-replacer": "^1.0.3",
+    "apigee-proxy-template-replacer": "^1.0.4",
     "node-fs": "^0.1.7",
     "path": "^0.11.14",
     "rimraf": "^2.4.0"

@@ -5,65 +5,37 @@ API proxy with the config values replaced.
 
 # Example
 
-
-    var path = require("path");
-    var fs = require('node-fs');
-    var rimraf = require('rimraf');
-
-    var GENERATOR = require("./lib/proxy-generator.js");
-    var TEMPLATE_DIR = "./proxy_templates/oauth2";
-    var ANSWERS_PATH = "./files/answerExample.json";
-    var OUTPUT_DIR = "./output";
-
-    console.log("Begin proxy generation from template...");
-
-    GENERATOR.createProxy(TEMPLATE_DIR,ANSWERS_PATH, function(err, data){
+    var replacer = require("apigee-proxy-template-replacer");
+    
+    var template_dir = "./proxy_templates/oauth2";
+    var answers_path = "./json_configs/answerExample.json";
+    
+    
+    replacer.createProxy(template_dir,answers_path, function(err, data){
         if(err){
             console.log(err);
         }else{
-            var outputDirectory = path.normalize(path.join(__dirname,OUTPUT_DIR));
-            createOutputDirectory(outputDirectory);
-            var zipFileAbsolute = path.normalize(path.join(outputDirectory,"/apiproxy_"+new Date().getTime()+".zip"));
-            console.log("Writing zip file: "+zipFileAbsolute);
-            fs.writeFileSync(zipFileAbsolute, data, 'binary');
-            console.log("New API Proxy located at: "+zipFileAbsolute);
+            //data returned as zip file
+            //save to disk or use for uploading to a server
         }
-        process.exit();
     });
+    
+# Detailed Documentation
 
-    function createOutputDirectory(name){
-
-        if (!fs.existsSync(name)) {
-            fs.mkdirSync(name, 0777,true);
-        }else{
-            // rimraf is module to do recursive directory deletes.
-            // only doing this for the example so we don't stack zip files
-            rimraf.sync(name);
-            fs.mkdirSync(name, 0777,true);
-        }
-    }
-
-
-
-See use in ```index.js```.  There are ```proxy-replacer.js``` and ```proxy-generator.js``` libraries.  The replacer interacts
-directly with the XML to replace the sections and variables.  Please see ```API PROXY TEMPLATE REPLACER``` below for more 
+There are two libraries, ```lib/proxy-replacer.js``` and ```lib/proxy-generator.js```.  The replacer interacts
+directly with the XML to replace the sections and variables.  Please see ```API Proxy Template Replacer``` below for more 
 details.  The generator leverages the replacer and will write the finished template to an output folder (currently ```output```).
 
-To use:
+The template directory provided should point to an Apigee API proxy like the example ```examples/proxy_templates/oauth2/```.
 
-1. ```npm install```
-2. ```node index.js```
-
-View the output created in the```./output``` directory.  You can alter the template located in ```./proxy-templates```.
-
-# API PROXY TEMPLATE REPLACER
+## API Proxy Template Replacer
 
 This replacer will read a json file with named key value pairs and alter an Apigee Edge API Proxy that contains
 template directives.  Based on directives(detailed below) in the bundle's XML files, the replacer will utilities will
 remove and/or configure the API proxy.
 
-For examples, please see the files located in ```./files``` directory and example usages of replacer utilities 
-in ```index.js```.
+For examples, please see the json config located in ```./examples/json_configs``` directory and example usage of the 
+replacer utilities in ```./examples/app.js```.
 
 ## Remove complete sections from XML
 
