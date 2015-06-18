@@ -1,19 +1,19 @@
 var path = require("path");
 var fs = require('node-fs');
 var rimraf = require('rimraf');
+var replacer = require("apigee-proxy-template-replacer");
 
-var GENERATOR = require("./lib/proxy-generator.js");
-var TEMPLATE_DIR = "./proxy_templates/oauth2";
-var ANSWERS_PATH = "./files/answerExample.json";
-var OUTPUT_DIR = "./output";
+var template_dir = "./proxy_templates/oauth2";
+var answers_path = "./files/answerExample.json";
+var output_dir = "./output";
 
 console.log("Begin proxy generation from template...");
 
-GENERATOR.createProxy(TEMPLATE_DIR,ANSWERS_PATH, function(err, data){
+replacer.createProxy(template_dir,answers_path, function(err, data){
     if(err){
         console.log(err);
     }else{
-        var outputDirectory = path.normalize(path.join(__dirname,OUTPUT_DIR));
+        var outputDirectory = path.normalize(path.join(__dirname,output_dir));
         createOutputDirectory(outputDirectory);
         var zipFileAbsolute = path.normalize(path.join(outputDirectory,"/apiproxy_"+new Date().getTime()+".zip"));
         console.log("Writing zip file: "+zipFileAbsolute);
@@ -34,6 +34,3 @@ function createOutputDirectory(name){
         fs.mkdirSync(name, 0777,true);
     }
 }
-
-
-

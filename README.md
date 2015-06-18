@@ -1,13 +1,58 @@
-# API PROXY GENERATION FROM TEMPLATE
+# Apigee Proxy Template Replacer
 
-See use in ```app.js```.  There are ```proxy-replacer.js``` and ```proxy-generator.js``` libraries.  The replacer interacts
+This template replacer will take a JSON config alongside an Apigee API proxy template, and create a final
+API proxy with the config values replaced.
+
+# Example
+
+
+    var path = require("path");
+    var fs = require('node-fs');
+    var rimraf = require('rimraf');
+
+    var GENERATOR = require("./lib/proxy-generator.js");
+    var TEMPLATE_DIR = "./proxy_templates/oauth2";
+    var ANSWERS_PATH = "./files/answerExample.json";
+    var OUTPUT_DIR = "./output";
+
+    console.log("Begin proxy generation from template...");
+
+    GENERATOR.createProxy(TEMPLATE_DIR,ANSWERS_PATH, function(err, data){
+        if(err){
+            console.log(err);
+        }else{
+            var outputDirectory = path.normalize(path.join(__dirname,OUTPUT_DIR));
+            createOutputDirectory(outputDirectory);
+            var zipFileAbsolute = path.normalize(path.join(outputDirectory,"/apiproxy_"+new Date().getTime()+".zip"));
+            console.log("Writing zip file: "+zipFileAbsolute);
+            fs.writeFileSync(zipFileAbsolute, data, 'binary');
+            console.log("New API Proxy located at: "+zipFileAbsolute);
+        }
+        process.exit();
+    });
+
+    function createOutputDirectory(name){
+
+        if (!fs.existsSync(name)) {
+            fs.mkdirSync(name, 0777,true);
+        }else{
+            // rimraf is module to do recursive directory deletes.
+            // only doing this for the example so we don't stack zip files
+            rimraf.sync(name);
+            fs.mkdirSync(name, 0777,true);
+        }
+    }
+
+
+
+See use in ```index.js```.  There are ```proxy-replacer.js``` and ```proxy-generator.js``` libraries.  The replacer interacts
 directly with the XML to replace the sections and variables.  Please see ```API PROXY TEMPLATE REPLACER``` below for more 
 details.  The generator leverages the replacer and will write the finished template to an output folder (currently ```output```).
 
 To use:
 
 1. ```npm install```
-2. ```node app.js```
+2. ```node index.js```
 
 View the output created in the```./output``` directory.  You can alter the template located in ```./proxy-templates```.
 
@@ -18,7 +63,7 @@ template directives.  Based on directives(detailed below) in the bundle's XML fi
 remove and/or configure the API proxy.
 
 For examples, please see the files located in ```./files``` directory and example usages of replacer utilities 
-in ```app.js```.
+in ```index.js```.
 
 ## Remove complete sections from XML
 

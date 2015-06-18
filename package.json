@@ -1,13 +1,12 @@
 {
   "name": "apigee-proxy-template-replacer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple proxy creator based on json config file and proxy template.",
-  "main": "app.js",
+  "main": "index.js",
   "dependencies": {
     "jszip": "^2.5.0",
     "node-fs": "^0.1.7",
-    "recursive-readdir": "^1.2.1",
-    "rimraf": "^2.3.3"
+    "recursive-readdir": "^1.2.1"
   },
   "devDependencies": {},
   "scripts": {

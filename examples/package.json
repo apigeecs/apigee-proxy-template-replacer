@@ -1,0 +1,17 @@
+{
+  "name": "apigee-proxy-replacer-sample",
+  "version": "1.0.0",
+  "description": "Sample App using the Apigee API proxy replacer tool.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "apigee-proxy-template-replacer": "^1.0.1",
+    "node-fs": "^0.1.7",
+    "path": "^0.11.14",
+    "rimraf": "^2.4.0"
+  }
+}
