@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault name="RaiseFaultCalloutFailed">
+    <FaultResponse>
+        <Set>
+            <StatusCode>400</StatusCode>
+            <ReasonPhrase>Bad Request</ReasonPhrase>
+            <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">{ "error": "Invalid Username or Password." }</Payload>
+        </Set>
+    </FaultResponse>
+</RaiseFault>

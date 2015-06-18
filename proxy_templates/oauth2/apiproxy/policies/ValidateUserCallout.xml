@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ServiceCallout continueOnError="true" name="ValidateUserCallout"> <!-- Custom failure assertion happens after this policy executes -->
+    <Request>
+        <Set>
+            <Headers>
+                <!--FOREACH pwAuthCalloutHeaders -->
+                <Header name="__item[0]__" ref="__item[1]__">__item[2]__</Header>
+                <!--FOREACH pwAuthCalloutHeaders -->
+            </Headers>
+            <Verb>__pwAuthCalloutMethod__</Verb>
+            <Payload contentType="application/json" variablePrefix="#" variableSuffix="%">__pwAuthCalloutPayload__</Payload>
+        </Set>
+        <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+    </Request>
+    <Response>calloutResponse</Response>
+    <HTTPTargetConnection>
+        <Properties/>
+        <URL>__pwAuthCalloutUrl__</URL>
+    </HTTPTargetConnection>
+</ServiceCallout>

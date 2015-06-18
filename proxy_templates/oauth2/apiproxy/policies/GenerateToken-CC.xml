@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OAuthV2 name="GenerateToken-CC">
+    <Operation>GenerateAccessToken</Operation>
+    <ExpiresIn>__ccTokenExpiry__</ExpiresIn> <!-- in milliseconds -->
+    <SupportedGrantTypes>
+        <!-- This policy is built specifically for client_credentials grant,
+            so only allow this grant_type to be supported -->
+        <GrantType>client_credentials</GrantType>
+    </SupportedGrantTypes>
+    <GenerateResponse enabled="false"/>
+    <Attributes>
+        <!--FOREACH ccTokenAttributes -->
+        <Attribute name="__item[0]__" ref="__item[1]__">__item[2]__</Attribute>
+        <!--FOREACH ccTokenAttributes -->
+    </Attributes>
+</OAuthV2>

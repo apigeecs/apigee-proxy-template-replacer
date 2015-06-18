@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Quota continueOnError="false" enabled="true" name="QuotaRateLimit">
+    <Allow count="__quotaRate__"/>
+    <Interval>__quotaRateInterval__</Interval>
+    <TimeUnit>__quotaRateTimeUnit__</TimeUnit>
+    <Distributed>true</Distributed>
+    <!-- Synchronous false, with no Asynchronous configuration, means Apigee
+         will async update the identifier's used count by default every 10 sec -->
+    <Synchronous>false</Synchronous>
+    <!-- no identifier so count/limit will be enforced for all API requests -->
+    <!-- ensure that the quota is counted and enforced by the second so the count reset happens faster -->
+    <PreciseAtSecondsLevel>true</PreciseAtSecondsLevel>
+    <Identifier ref="__quotaIdentifier__"/>
+</Quota>

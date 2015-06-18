@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="SetResponse-InvalidRequest">
+    <Set>
+        <Headers/>
+        <!-- Payload is provided with no new lines,tabs,etc. as Apigee will use all chars between <Payload> to set the content -->
+        <Payload contentType="application/json" variablePrefix="#" variableSuffix="%">{"error" : "invalid_request"}</Payload>
+        <StatusCode>400</StatusCode>
+        <ReasonPhrase>Bad Request</ReasonPhrase>
+    </Set>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+    <AssignTo createNew="true" transport="http" type="response"/> <!-- Overwrite any existing response message -->
+</AssignMessage>

@@ -1,0 +1,25 @@
+{
+  "name": "apiproxy-template-replacer",
+  "version": "1.0.0",
+  "description": "Simple proxy creator based on json config file and proxy template.",
+  "main": "app.js",
+  "dependencies": {
+    "jszip": "^2.5.0",
+    "node-fs": "^0.1.7",
+    "recursive-readdir": "^1.2.1",
+    "rimraf": "^2.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.apigee.com:api-wizard/apiproxy-template-replacer.git"
+  },
+  "author": "Apigee Corporation",
+  "contributors": [
+    "Michael Russo <mrusso@apigee.com>"
+  ],
+  "license": ""
+}

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <Description>__apiDescription__</Description>
+    <PreFlow name="PreFlow">
+        <Request>
+            <!--START rateLimitTypes==spikeArrest -->
+            <Step>
+                <Name>SpikeArrest</Name>
+            </Step>
+            <!--END rateLimitTypes==spikeArrest -->
+            <Step>
+                <Name>DecodeRequestAuthorization</Name>
+            </Step>
+            <Step>
+                <Name>ValidateKey</Name>
+            </Step>
+            <Step>
+                <Name>RaiseFaultInvalidAuthorization</Name>
+                <Condition>(requestKey == null) or (requestSecret != verifyapikey.ValidateKey.client_secret)</Condition>
+            </Step>
+            <!--START rateLimitTypes==quota -->
+            <Step>
+                <Name>QuotaRateLimit</Name>
+            </Step>
+            <!--END rateLimitTypes==quota -->
+        </Request>
+    </PreFlow>
+    <Flows>
+        <!--START grantTypes==cc -->
+        <Flow name="Accesstoken-CC">
+            <Description>Client Credentials Grant</Description>
+            <Condition>(request.formparam.grant_type == "client_credentials") and (proxy.pathsuffix MatchesPath "/token") and (request.verb == "POST")</Condition>
+            <Request>
+                <Step>
+                    <Name>GenerateToken-CC</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>SetTokenResponse-CC</Name>
+                </Step>
+            </Response>
+        </Flow>
+        <!--END grantTypes==cc -->
+
+        <!--START grantTypes==pw -->
+        <Flow name="Accesstoken-PW">
+            <Description>Password Grant</Description>
+            <Condition>(request.formparam.grant_type == "password") and (proxy.pathsuffix MatchesPath "/token") and (request.verb == "POST")</Condition>
+            <Request>
+                <Step>
+                    <Name>ValidateUserCallout</Name>
+                </Step>
+                <Step>
+                    <Name>RaiseFaultCalloutFailed</Name>
+                    <Condition>(calloutResponse.status.code != "__pwAuthCalloutResponseAssertionStatus__")</Condition>
+                </Step>
+                <Step>
+                    <Name>ExtractCalloutParams</Name>
+                </Step>
+                <Step>
+                    <Name>GenerateToken-PW</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>SetTokenResponse-PW</Name>
+                </Step>
+            </Response>
+        </Flow>
+        <!--END grantTypes==pw -->
+
+
+        <Flow name="InvalidRequest">
+            <Description>Invalid Request Handling</Description>
+            <Response>
+                <Step>
+                    <Name>SetResponse-InvalidRequest</Name>
+                </Step>
+            </Response>
+        </Flow>
+
+    </Flows>
+    <HTTPProxyConnection>
+
+        <!--START apiVersionLocation==before -->
+        <BasePath>/v__apiVersion____apiBasePath__</BasePath>
+        <!--END apiVersionLocation==before -->
+
+        <!--START apiVersionLocation==after -->
+        <BasePath>__apiBasePath__/v__apiVersion__</BasePath>
+        <!--END apiVersionLocation==after -->
+
+        <!--START apiListeners==http -->
+        <VirtualHost>default</VirtualHost>
+        <!--END apiListeners==http -->
+
+        <!--START apiListeners==https -->
+        <VirtualHost>default</VirtualHost>
+        <!--END apiListeners==https -->
+
+    </HTTPProxyConnection>
+
+    <!-- This service is a full API on top of Apigee to provide an Oauth 2.0 Service -->
+    <RouteRule name="NoRoute"/>
+
+</ProxyEndpoint>

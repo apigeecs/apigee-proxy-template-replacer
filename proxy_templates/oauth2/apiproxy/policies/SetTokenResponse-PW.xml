@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="SetTokenResponse-PW">
+    <Set>
+        <Headers/>
+        <!-- Payload is provided with no new lines,tabs,etc. as Apigee will use all chars between <Payload> to set the content -->
+        <Payload contentType="application/json" variablePrefix="#" variableSuffix="%">{"access_token":"#oauthv2accesstoken.GenerateToken-PW.access_token%", "token_type":"bearer", "expires_in": "#oauthv2accesstoken.GenerateToken-PW.expires_in%", "refresh_token":"#oauthv2accesstoken.GenerateToken-PW.refresh_token%", "scope":"#oauthv2accesstoken.GenerateToken-PW.scope%", "state":"#oauthv2accesstoken.GenerateToken-PW.state%"}</Payload>
+        <StatusCode>200</StatusCode>
+        <ReasonPhrase>OK</ReasonPhrase>
+    </Set>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+    <AssignTo createNew="true" transport="http" type="response"/> <!-- Overwrite any existing response message -->
+</AssignMessage>

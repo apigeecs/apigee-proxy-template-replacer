@@ -1,0 +1,44 @@
+{
+	"apiName" : "oauth2",
+	"apiVersion" : "1",
+	"apiBasepath" : "/oauth2",
+	"apiVersionLocation" : "before",
+	"apiDescription" : "This API is a OAuth 2.0 token endpoint.",
+	"apiListeners" : ["https"],
+	"grantTypes" : ["pw"],
+  	"supportedGrantTypes" : ["client_credentials","password"],
+	"ccTokenExpiry" : "7200",
+  	"ccTokenAttributes" : [
+	  ["userEmail","request.formparam.username","NA"],
+	  ["systemTimestamp", "system.timestamp","NA"]
+	],
+  	"pwTokenExpiry":"3600",
+  	"pwRefreshTokenExpiry":"14400",
+  	"pwAuthCalloutUrl" : "http://testing.example.com/users/auth",
+  	"pwAuthCalloutMethod" : "POST",
+  	"pwAuthCalloutHeaders" : [
+	  ["content-type", "", "application/json"],
+	  ["authorization", "calloutAuthValue", ""]
+	],
+  	"pwAuthCalloutPayload" : "{\"user\" : \"#request.formparam.username%\", \"pass\" : \"#request.formparam.password%\"}",
+  	"pwAuthCalloutResponseAssertionStatus" : "200",
+    "pwAuthCalloutResponseExtractTypes" : ["json"],
+	"pwAuthCalloutResponseExtractParams" : [
+	  ["userId", "$.userId"],
+	  ["firstName", "$.firstName"],
+	  ["lastName", "$.lastName"]
+	],
+	"pwTokenAttributes" : [
+	  ["userId","userId","NA"],
+	  ["firstName", "firstName","NA"],
+	  ["systemTimestamp", "system.timestamp","NA"]
+	],
+	"rateLimitTypes" : ["spikeArrest", "quota"],
+  	"spikeArrestRate" : "10ps",
+  	"spikeArrestidentifier" : "",
+  	"quotaRate" : 20,
+   	"quotaRateInterval" : 5,
+  	"quotaRateTimeUnit" : "minute",
+  	"quotaIdentifier" : "request.queryparam.apikey"
+
+}
