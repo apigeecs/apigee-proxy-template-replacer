@@ -1,6 +1,6 @@
 {
   "name": "apigee-proxy-template-replacer",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Simple proxy creator based on json config file and proxy template.",
   "main": "index.js",
   "dependencies": {
